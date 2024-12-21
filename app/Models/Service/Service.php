@@ -1,21 +1,20 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\Service;
 
-use Database\Factories\TicketFactory;
+use Database\Factories\ServiceFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Ticket extends Model
+class Service extends Model
 {
-    /** @use HasFactory<TicketFactory> */
+    /** @use HasFactory<ServiceFactory> */
     use HasFactory, SoftDeletes;
 
-    protected $table = 'tickets';
+    protected $table = 'services';
 
     protected $fillable = [
-        'description',
-        'status',
+        'title',
     ];
 }

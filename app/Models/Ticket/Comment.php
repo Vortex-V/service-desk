@@ -1,19 +1,20 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\Ticket;
 
+use Database\Factories\CommentFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Client extends Model
+class Comment extends Model
 {
-    /** @use HasFactory<\Database\Factories\ClientFactory> */
+    /** @use HasFactory<CommentFactory> */
     use HasFactory, SoftDeletes;
 
-    protected $table = 'clients';
+    protected $table = 'comments';
 
     protected $fillable = [
-        'name',
+        'body'
     ];
 }

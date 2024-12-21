@@ -5,7 +5,7 @@ namespace Database\Factories;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\TicketType>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Ticket\TicketType>
  */
 class TicketTypeFactory extends Factory
 {

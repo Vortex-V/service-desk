@@ -1,20 +1,19 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\Client;
 
-use Database\Factories\ServiceFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Service extends Model
+class Client extends Model
 {
-    /** @use HasFactory<ServiceFactory> */
+    /** @use HasFactory<\Database\Factories\ClientFactory> */
     use HasFactory, SoftDeletes;
 
-    protected $table = 'services';
+    protected $table = 'clients';
 
     protected $fillable = [
-        'title',
+        'name',
     ];
 }

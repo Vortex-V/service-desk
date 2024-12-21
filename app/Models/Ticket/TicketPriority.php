@@ -1,18 +1,18 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\Ticket;
 
-use Database\Factories\TicketTypeFactory;
+use Database\Factories\TicketPriorityFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class TicketType extends Model
+class TicketPriority extends Model
 {
-    /** @use HasFactory<TicketTypeFactory> */
+    /** @use HasFactory<TicketPriorityFactory> */
     use HasFactory, SoftDeletes;
 
-    protected $table = 'ticket_types';
+    protected $table = 'ticket_priorities';
 
     protected $fillable = [
         'title',

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Enum;
+namespace App\Models\Ticket\Enum;
 
 enum TicketUserType: string
 {

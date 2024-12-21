@@ -1,20 +1,20 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\Ticket;
 
-use Database\Factories\CommentFactory;
+use Database\Factories\TicketTypeFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Comment extends Model
+class TicketType extends Model
 {
-    /** @use HasFactory<CommentFactory> */
+    /** @use HasFactory<TicketTypeFactory> */
     use HasFactory, SoftDeletes;
 
-    protected $table = 'comments';
+    protected $table = 'ticket_types';
 
     protected $fillable = [
-        'body'
+        'title',
     ];
 }
