@@ -1,14 +1,19 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Database\Factories;
 
+use App\Models\Client\LegalDetail;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Client\LegalDetail>
+ * @extends Factory<LegalDetail>
  */
-class LegalDetailFactory extends Factory
+final class LegalDetailFactory extends Factory
 {
+    protected $model = LegalDetail::class;
+
     /**
      * Define the model's default state.
      *
@@ -19,5 +24,20 @@ class LegalDetailFactory extends Factory
         return [
             //
         ];
+    }
+
+    public function faked(): self
+    {
+        return $this->state(fn(array $attributes) => [
+            'inn' => fake()->inn10(),
+            'kpp' => fake()->kpp(),
+//            'ogrn',
+//            'bik',
+            'country' => fake()->country(),
+            'city' => fake()->city(),
+            'street' => fake()->streetName(),
+            'house' => fake()->buildingNumber(),
+            'postcode' => fake()->postcode(),
+        ]);
     }
 }

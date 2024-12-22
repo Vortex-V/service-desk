@@ -1,17 +1,25 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\Ticket\TicketPriority;
 use Illuminate\Database\Seeder;
 
-class TicketPrioritySeeder extends Seeder
+final class TicketPrioritySeeder extends Seeder
 {
     /**
      * Run the database seeds.
      */
     public function run(): void
     {
-        //
+        TicketPriority::factory()
+            ->createMany([
+                ['title' => 'Низкий'],
+                ['title' => 'Средний'],
+                ['title' => 'Высокий'],
+                ['title' => 'Срочный'],
+            ]);
     }
 }

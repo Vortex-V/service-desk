@@ -13,16 +13,10 @@ return new class extends Migration
     {
         Schema::create('comment_mentions', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('comment_id')->index();
-            $table->unsignedBigInteger('user_id')->index();
-
-            $table->foreign('comment_id')
-                ->references('id')
-                ->on('comments');
-
-            $table->foreign('user_id')
-                ->references('id')
-                ->on('users');
+            $table->foreignId('comment_id')
+                ->constrained('comments');
+            $table->unsignedBigInteger('user_id')
+                ->constrained('users');
         });
     }
 

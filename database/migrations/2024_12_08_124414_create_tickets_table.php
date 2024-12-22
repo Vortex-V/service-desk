@@ -13,6 +13,10 @@ return new class extends Migration
     {
         Schema::create('tickets', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('type_id')
+                ->constrained('ticket_types', 'id');
+            $table->foreignId('priority_id')
+                ->constrained('ticket_priorities', 'id');
             $table->string('description');
             $table->string('status');
             $table->timestamps();

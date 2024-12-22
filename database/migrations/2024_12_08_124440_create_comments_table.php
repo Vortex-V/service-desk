@@ -13,21 +13,15 @@ return new class extends Migration
     {
         Schema::create('comments', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('user_id')->index();
-            $table->unsignedBigInteger('ticket_id')->index();
+            $table->foreignId('user_id')
+                ->constrained('users');
+            $table->foreignId('ticket_id')
+                ->constrained('tickets');
             $table->text('body');
             $table->timestamps();
             $table->softDeletes();
 
-            $table->foreign('user_id')
-                ->references('id')
-                ->on('users');
-
-            $table->foreign('ticket_id')
-                ->references('id')
-                ->on('tickets');
-
-            $table->index(['user_id', 'recipient_id', 'ticket_id'], 'comments_user_id_recipient_id_ticket_id_idx');
+            $table->index(['user_id', 'ticket_id'], 'comments_user_id_ticket_id_idx');
         });
     }
 

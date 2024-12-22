@@ -1,14 +1,19 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Database\Factories;
 
+use App\Models\Ticket\TicketType;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Ticket\TicketType>
+ * @extends Factory<TicketType>
  */
-class TicketTypeFactory extends Factory
+final class TicketTypeFactory extends Factory
 {
+    protected $model = TicketType::class;
+
     /**
      * Define the model's default state.
      *

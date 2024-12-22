@@ -14,24 +14,28 @@
 
 Панель администратора
 * Пользователи
+  * [x] Seed
   * [ ] Список
   * [ ] Создание
   * [ ] Редактирование 
   * [ ] Привязка к роли
   * [ ] Удаление
 * Контактные данные
+  * [x] Seed
   * [ ] Список
   * [ ] Создание
   * [ ] Редактирование
   * [ ] Привязка к пользователю
   * [ ] Удаление
 * Сервисы/Услуги
+  * [x] Seed
   * [ ] Список
   * [ ] Создание
   * [ ] Редактирование
   * [ ] Привязка ответственных менеджеров
   * [ ] Удаление
 * Клиенты
+  * [x] Seed
   * [ ] Список
   * [ ] Создание
   * [ ] Редактирование
@@ -43,11 +47,13 @@
   * [ ] Ссылка на карточку
   * [ ] Удаление
 * Типы заявок
+  * [x] Seed
   * [ ] Список
   * [ ] Создание
   * [ ] Редактирование
   * [ ] Удаление
 * Приоритеты заявок
+  * [x] Seed
   * [ ] Список
   * [ ] Создание
   * [ ] Редактирование
@@ -75,6 +81,7 @@
     email       string
     password    string
     role        string      // Сделаем проще заместо RBAC : admin|manager|client
+    client_id   int|null
     created_at  timestamp
     updated_at  timestamp
     deleted_at  timestamp
@@ -124,17 +131,14 @@
     updated_at  timestamp
     deleted_at  timestamp
     
-    client_users
-    client_id           int
-    user_id             int
-    
     client_services // сервисы, которыми пользуется клиент
-    id              int
     client_id       int
     service_id      int
     
     tickets
     id                  int
+    ticket_type_id      int
+    ticket_priority_id  int
     description         string
     status              : draft, new, in_work, closed, rejected
     created_at  timestamp
@@ -143,12 +147,10 @@
     
     ticket_types
     id          int
-    ticket_id   int
     title       string
     
     ticket_priorities
     id          int
-    ticket_id   int
     title       string
     
     ticket_users

@@ -11,17 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('ticket_priorities', function (Blueprint $table) {
+        Schema::create('ticket_types', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('ticket_id')->index();
             $table->string('title');
             $table->timestamps();
             $table->softDeletes();
-
-            $table->foreign('ticket_id')
-                ->references('id')
-                ->on('tickets');
-
         });
     }
 
@@ -30,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('ticket_priorities');
+        Schema::dropIfExists('ticket_types');
     }
 };

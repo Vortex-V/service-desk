@@ -13,11 +13,12 @@ return new class extends Migration
     {
         Schema::create('legal_details', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('client_id');
+            $table->foreignId('client_id')
+                ->constrained('clients', 'id');
             $table->string('inn');
             $table->string('kpp');
-            $table->string('ogrn');
-            $table->string('bik');
+            $table->string('ogrn')->nullable();
+            $table->string('bik')->nullable();
             $table->string('country');
             $table->string('city');
             $table->string('street');
@@ -25,10 +26,6 @@ return new class extends Migration
             $table->string('postcode')->nullable();
             $table->timestamps();
             $table->softDeletes();
-
-            $table->foreign('client_id')
-                ->references('id')
-                ->on('clients');
         });
     }
 

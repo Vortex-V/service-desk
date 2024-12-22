@@ -14,17 +14,12 @@ return new class extends Migration
         Schema::create('service_users', function (Blueprint $table) {
             $table->comment('Таблица ответственных за определённые услуги');
 
-            $table->id();
-            $table->unsignedBigInteger('service_id')->index();
-            $table->unsignedBigInteger('user_id')->index();
+            $table->foreignId('service_id')
+                ->constrained('services', 'id');
+            $table->foreignId('user_id')
+                ->constrained('users', 'id');
 
-            $table->foreign('service_id')
-                ->references('id')
-                ->on('services');
-
-            $table->foreign('user_id')
-                ->references('id')
-                ->on('users');
+            $table->primary(['service_id', 'user_id']);
         });
     }
 

@@ -12,17 +12,12 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('client_services', function (Blueprint $table) {
-            $table->id();
-            $table->unsignedBigInteger('client_id')->index();
-            $table->unsignedBigInteger('service_id');
+            $table->foreignId('client_id')
+                ->constrained('clients', 'id');
+            $table->foreignId('service_id')
+                ->constrained('services', 'id');
 
-            $table->foreign('client_id')
-                ->references('id')
-                ->on('clients');
-
-            $table->foreign('service_id')
-                ->references('id')
-                ->on('services');
+            $table->primary(['client_id', 'service_id']);
         });
     }
 

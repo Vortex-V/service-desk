@@ -1,14 +1,19 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Database\Factories;
 
+use App\Models\Service\Service;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Service\Service>
+ * @extends Factory<Service>
  */
-class ServiceFactory extends Factory
+final class ServiceFactory extends Factory
 {
+    protected $model = Service::class;
+
     /**
      * Define the model's default state.
      *
@@ -19,5 +24,12 @@ class ServiceFactory extends Factory
         return [
             //
         ];
+    }
+
+    public function faked(): self
+    {
+        return $this->state(fn(array $attributes) => [
+            'title' => fake()->jobTitle(),
+        ]);
     }
 }

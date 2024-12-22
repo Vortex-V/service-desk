@@ -13,17 +13,14 @@ return new class extends Migration
     {
         Schema::create('contacts', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('user_id');
+            $table->foreignId('user_id')
+                ->constrained('users', 'id');
             $table->string('first_name')->nullable();
             $table->string('last_name')->nullable();
             $table->string('patronymic')->nullable();
             $table->string('phone');
             $table->timestamps();
             $table->softDeletes();
-
-            $table->foreign('user_id')
-                ->references('id')
-                ->on('users');
         });
     }
 

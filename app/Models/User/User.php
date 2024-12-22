@@ -1,14 +1,19 @@
 <?php
 
-namespace App\Models;
+declare(strict_types=1);
 
+namespace App\Models\User;
+
+use App\Models\Client\Client;
 use App\Models\User\Enum\UserRole;
 use Database\Factories\UserFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
-class User extends Authenticatable
+final class User extends Authenticatable
 {
     /** @use HasFactory<UserFactory> */
     use HasFactory, Notifiable;
@@ -49,5 +54,15 @@ class User extends Authenticatable
             'password' => 'hashed',
             'role' => UserRole::class,
         ];
+    }
+
+    public function contact(): HasOne
+    {
+        return $this->hasOne(Contact::class, 'user_id', 'id');
+    }
+
+    public function client(): BelongsTo
+    {
+        return $this->belongsTo(Client::class, 'client_id', 'id', 'users');
     }
 }
