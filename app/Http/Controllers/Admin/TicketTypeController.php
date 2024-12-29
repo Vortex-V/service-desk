@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
@@ -7,7 +9,7 @@ use App\Http\Requests\Admin\Ticket\StoreTicketTypeRequest;
 use App\Http\Requests\Admin\Ticket\UpdateTicketTypeRequest;
 use App\Models\Ticket\TicketType;
 
-class TicketTypeController extends Controller
+final class TicketTypeController extends Controller
 {
     /**
      * Display a listing of the resource.

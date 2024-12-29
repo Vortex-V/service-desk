@@ -11,14 +11,16 @@ RUN apt-get update \
     libxml2-dev \
     libfreetype6-dev \
     libreadline-dev \
-    libgmp-dev
+    libgmp-dev \
+    libzip-dev
 
-RUN docker-php-ext-install  \
+RUN docker-php-ext-install \
         pdo_pgsql \
         pcntl \
         exif \
         xml \
-        intl
+        intl \
+        zip
 
 COPY --from=composer:latest /usr/bin/composer /usr/local/bin/composer
 
@@ -27,8 +29,6 @@ RUN pecl channel-update pecl.php.net \
     && pecl install -o -f xdebug
 
 ADD php/php.ini /usr/local/etc/php/conf.d
-
-#RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.0/install.sh | bash
 
 RUN apt-get -y autoremove \
     && apt-get clean \

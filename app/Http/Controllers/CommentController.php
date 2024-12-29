@@ -1,12 +1,13 @@
 <?php
 
+declare(strict_types=1);
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreCommentRequest;
 use App\Http\Requests\UpdateCommentRequest;
 use App\Models\Ticket\Comment;
 
-class CommentController extends Controller
+final class CommentController extends Controller
 {
     /**
      * Display a listing of the resource.

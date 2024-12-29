@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
@@ -7,7 +9,7 @@ use App\Http\Requests\Admin\User\Contact\StoreContactRequest;
 use App\Http\Requests\Admin\User\Contact\UpdateContactRequest;
 use App\Models\User\Contact;
 
-class ContactController extends Controller
+final class ContactController extends Controller
 {
     /**
      * Display a listing of the resource.

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
@@ -7,7 +9,7 @@ use App\Http\Requests\Admin\Client\StoreLegalDetailRequest;
 use App\Http\Requests\Admin\Client\UpdateLegalDetailRequest;
 use App\Models\Client\LegalDetail;
 
-class ClientLegalsController extends Controller
+final class ClientLegalsController extends Controller
 {
     /**
      * Display a listing of the resource.

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
@@ -7,7 +9,7 @@ use App\Http\Requests\Admin\Service\StoreServiceRequest;
 use App\Http\Requests\Admin\Service\UpdateServiceRequest;
 use App\Models\Service\Service;
 
-class ServiceController extends Controller
+final class ServiceController extends Controller
 {
     /**
      * Display a listing of the resource.

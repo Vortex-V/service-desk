@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
@@ -7,7 +9,7 @@ use App\Http\Requests\Admin\Ticket\StoreTicketPriorityRequest;
 use App\Http\Requests\Admin\Ticket\UpdateTicketPriorityRequest;
 use App\Models\Ticket\TicketPriority;
 
-class TicketPriorityController extends Controller
+final class TicketPriorityController extends Controller
 {
     /**
      * Display a listing of the resource.
