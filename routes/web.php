@@ -2,7 +2,6 @@
 
 declare(strict_types=1);
 
-use App\AdminAuthMiddleware;
 use App\Http\Controllers\Admin\ClientController;
 use App\Http\Controllers\Admin\ContactController;
 use App\Http\Controllers\Admin\ServiceController;
