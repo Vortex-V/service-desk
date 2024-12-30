@@ -2,18 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\Ticket\StoreTicketRequest;
 use App\Http\Requests\Ticket\UpdateTicketRequest;
+use App\Http\Requests\Ticket\StoreTicketRequest;
 use App\Models\Ticket\Ticket;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Gate;
 
 class TicketController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+    public function index(): RedirectResponse
     {
-        //
+        return redirect('home');
     }
 
     /**
@@ -21,7 +20,7 @@ class TicketController extends Controller
      */
     public function create()
     {
-        //
+        return view('ticket.create');
     }
 
     /**
@@ -29,7 +28,9 @@ class TicketController extends Controller
      */
     public function store(StoreTicketRequest $request)
     {
-        //
+        Ticket::factory()->createOne($request->input());
+
+        return redirect('home');
     }
 
     /**
@@ -37,7 +38,7 @@ class TicketController extends Controller
      */
     public function show(Ticket $ticket)
     {
-        //
+        return view('ticket.show', compact('ticket'));
     }
 
     /**
@@ -61,6 +62,10 @@ class TicketController extends Controller
      */
     public function destroy(Ticket $ticket)
     {
-        //
+        Gate::allows('delete', $ticket);
+
+        $ticket->delete();
+
+        return redirect('home');
     }
 }

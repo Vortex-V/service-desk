@@ -4,9 +4,11 @@ declare(strict_types=1);
 
 namespace App\Models\Ticket;
 
+use App\Models\User\User;
 use Database\Factories\TicketFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -23,6 +25,8 @@ final class Ticket extends Model
         'status',
     ];
 
+
+    //region Relations
     public function type(): HasOne
     {
         return $this->hasOne(TicketType::class, 'id', 'type_id');
@@ -32,4 +36,10 @@ final class Ticket extends Model
     {
         return $this->hasOne(TicketPriority::class, 'id', 'priority_id');
     }
+
+    public function users(): BelongsToMany
+    {
+        return $this->belongsToMany(User::class, 'ticket_user', 'ticket_id', 'user_id');
+    }
+    //endregion
 }

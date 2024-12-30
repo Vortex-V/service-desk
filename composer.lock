@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "456bab438eed3a6d678cada93e64f4dd",
+    "content-hash": "776da23eae2997c30c4cf0a92315bbf2",
     "packages": [
         {
             "name": "brick/math",
@@ -2005,6 +2005,67 @@
                 }
             ],
             "time": "2024-12-08T08:18:47+00:00"
+        },
+        {
+            "name": "madbob/larastrap",
+            "version": "0.9.6",
+            "source": {
+                "type": "git",
+                "url": "https://gitlab.com/madbob/larastrap.git",
+                "reference": "f7053f007556ff799155c01097c048b87bd73ff3"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://gitlab.com/api/v4/projects/madbob%2Flarastrap/repository/archive.zip?sha=f7053f007556ff799155c01097c048b87bd73ff3",
+                "reference": "f7053f007556ff799155c01097c048b87bd73ff3",
+                "shasum": ""
+            },
+            "require-dev": {
+                "friendsofphp/php-cs-fixer": "^3.39",
+                "orchestra/testbench": "^8.15"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "MadBob\\Larastrap\\LarastrapServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "MadBob\\Larastrap\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Roberto Guido",
+                    "email": "info@madbob.org"
+                }
+            ],
+            "description": "Opinionated Bootstrap5 components for Laravel.",
+            "homepage": "https://larastrap.madbob.org/",
+            "keywords": [
+                "blade",
+                "bootstrap",
+                "bootstrap5",
+                "laravel"
+            ],
+            "support": {
+                "issues": "https://gitlab.com/madbob/larastrap/-/issues",
+                "source": "https://gitlab.com/madbob/larastrap/-/tree/0.9.6"
+            },
+            "funding": [
+                {
+                    "url": "https://www.madbob.org/donazioni/",
+                    "type": "other"
+                }
+            ],
+            "time": "2024-11-23T17:02:03+00:00"
         },
         {
             "name": "monolog/monolog",
@@ -8378,13 +8439,13 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": {},
+    "stability-flags": [],
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
         "php": "^8.3",
         "ext-pdo": "*"
     },
-    "platform-dev": {},
-    "plugin-api-version": "2.6.0"
+    "platform-dev": [],
+    "plugin-api-version": "2.2.0"
 }

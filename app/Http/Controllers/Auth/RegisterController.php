@@ -1,9 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use App\Models\User;
+use App\Models\User\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -28,7 +30,7 @@ final class RegisterController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/home';
+    protected string $redirectTo = '/home';
 
     /**
      * Create a new controller instance.
@@ -57,9 +59,6 @@ final class RegisterController extends Controller
 
     /**
      * Create a new user instance after a valid registration.
-     *
-     * @param  array  $data
-     * @return \App\Models\User
      */
     protected function create(array $data)
     {

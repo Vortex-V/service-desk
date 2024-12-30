@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
+use App\Models\Ticket\Ticket;
 use Illuminate\Contracts\Support\Renderable;
 
 final class HomeController extends Controller
@@ -25,6 +26,10 @@ final class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $user = auth()->user();
+
+        $ticketsPaginator = Ticket::whereAny(['author_id', 'applicant_id'], $user->id)->cursorPaginate(10);
+
+        return view('home', compact('ticketsPaginator'));
     }
 }

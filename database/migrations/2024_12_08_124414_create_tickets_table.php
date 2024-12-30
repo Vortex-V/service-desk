@@ -21,6 +21,12 @@ return new class extends Migration
                 ->constrained('ticket_priorities', 'id');
             $table->string('description');
             $table->string('status');
+            $table->foreignId('applicant_id')
+                ->constrained('users', 'id');
+            $table->foreignId('author_id')
+                ->constrained('users', 'id');
+            $table->foreignId('manager_id')
+                ->constrained('users', 'id');
             $table->timestamps();
             $table->softDeletes();
         });
