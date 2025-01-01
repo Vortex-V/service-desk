@@ -41,7 +41,6 @@ services:
             - proj-net
     db:
         image: postgres:latest
-        restart: unless-stopped
         environment:
             POSTGRES_DB: $DB_DATABASE
             POSTGRES_USER: $DB_USERNAME

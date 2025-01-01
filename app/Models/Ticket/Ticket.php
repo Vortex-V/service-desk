@@ -21,10 +21,13 @@ final class Ticket extends Model
     protected static string $factory = TicketFactory::class;
 
     protected $fillable = [
+        'manager_id',
+        'applicant_id',
+        'service_id',
+        'type_id',
+        'priority_id',
         'description',
-        'status',
     ];
-
 
     //region Relations
     public function type(): HasOne

@@ -16,15 +16,13 @@
                         // TODO use GridView
                         $columns = [
                             'id' => 'ID',
-                            'type' => 'Тип',
-                            'priority' => 'Приоритет',
                             'status' => 'Статус',
                         ];
                     @endphp
                     <x-bs.table.table>
                         <x-bs.table.head :columns="$columns"/>
                         @foreach($ticketsPaginator as $ticket)
-                            <x-bs.table.row :columns="$columns" :data="$ticket"/>
+                            <x-bs.table.row :route="route('tickets.show', $ticket)" :columns="$columns" :data="$ticket"/>
                         @endforeach
                     </x-bs.table.table>
                     {{ $ticketsPaginator->links() }}

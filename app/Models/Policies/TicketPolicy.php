@@ -1,12 +1,14 @@
 <?php
 
+ declare(strict_types=1);
+
 namespace App\Models\Policies;
 
 use App\Models\Ticket\Ticket;
 use App\Models\User\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
-class TicketPolicy
+final class TicketPolicy
 {
     use HandlesAuthorization;
 

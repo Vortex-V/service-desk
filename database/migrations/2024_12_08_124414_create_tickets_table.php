@@ -26,7 +26,12 @@ return new class extends Migration
             $table->foreignId('author_id')
                 ->constrained('users', 'id');
             $table->foreignId('manager_id')
+                ->nullable()
                 ->constrained('users', 'id');
+            $table->foreignId('client_id')
+                ->constrained('clients', 'id');
+            $table->foreignId('service_id')
+                ->constrained('services', 'id');
             $table->timestamps();
             $table->softDeletes();
         });
