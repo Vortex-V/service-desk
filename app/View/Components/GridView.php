@@ -16,6 +16,6 @@ class GridView extends Component
     public function render(): View
     {
         // TODO
-        return view('components.grid-view');
+        return view('components.model-view.grid.grid-view');
     }
 }

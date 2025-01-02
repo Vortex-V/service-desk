@@ -20,7 +20,7 @@ final class StoreTicketRequest extends FormRequest
     {
         $user = auth()->user();
         if (isset($user->client_id)) {
-            return $this->input('applicant_id') === $user->id;
+            return $this->integer('applicant_id') === $user->id;
         }
 
         return true;

@@ -19,7 +19,7 @@ return new class extends Migration
                 ->constrained('ticket_types', 'id');
             $table->foreignId('priority_id')
                 ->constrained('ticket_priorities', 'id');
-            $table->string('description');
+            $table->text('description');
             $table->string('status');
             $table->foreignId('applicant_id')
                 ->constrained('users', 'id');

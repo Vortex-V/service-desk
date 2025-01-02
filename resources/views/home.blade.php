@@ -5,7 +5,9 @@
             <div class="card shadow-sm">
                 <div class="card-body">
                     <h1>Мои заявки</h1>
-                    <a href="{{route('tickets.create')}}" class="btn btn-primary float-end">Создать заявку</a>
+                    @unless(Gate::allows('admin'))
+                        <a href="{{route('tickets.create')}}" class="btn btn-primary float-end">Создать заявку</a>
+                    @endunless
                 </div>
             </div>
         </div>

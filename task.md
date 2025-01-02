@@ -60,9 +60,9 @@
   * [ ] Удаление
 
 Заявки
-  * [ ] Список
+  * [x] Список
   * [ ] Фильтры
-  * [ ] Создание
+  * [x] Создание
 * Карточка заявки
   * Отображать
     * [ ] Данные пользователя клиента
@@ -140,7 +140,7 @@
     ticket_type_id      int
     ticket_priority_id  int
     description         string
-    status              : draft, new, in_work, closed, rejected
+    status              : new, in_work, closed, rejected
     created_at  timestamp
     updated_at  timestamp
     deleted_at  timestamp

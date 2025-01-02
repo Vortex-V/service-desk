@@ -27,9 +27,11 @@
                         <x-bs.navbar.nav-item url="{{ route('home') }}">
                             Мои заявки
                         </x-bs.navbar.nav-item>
-                        <x-bs.navbar.nav-item url="{{ route('tickets.create') }}">
-                            Создать заявку
-                        </x-bs.navbar.nav-item>
+                        @unless(Gate::allows('admin'))
+                            <x-bs.navbar.nav-item url="{{ route('tickets.create') }}">
+                                Создать заявку
+                            </x-bs.navbar.nav-item>
+                        @endunless
                     </ul>
 
                     <!-- Right Side Of Navbar -->
@@ -50,7 +52,7 @@
                         @else
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    {{ Auth::user()->name }}
+                                    {{ Auth::user()->fullName }}
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">

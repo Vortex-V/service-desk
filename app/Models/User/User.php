@@ -13,6 +13,9 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
+/**
+ * @property-read string $fullName
+ */
 final class User extends Authenticatable
 {
     /** @use HasFactory<UserFactory> */
@@ -74,5 +77,12 @@ final class User extends Authenticatable
     public function isManager(): bool
     {
         return $this->role === UserRole::Manager;
+    }
+
+    public function getFullNameAttribute(): string
+    {
+        return Contact::selectRaw("concat_ws(' ', last_name, first_name) as full_name")
+            ->whereRelation('user', 'id', $this->id)
+            ->value('full_name');
     }
 }

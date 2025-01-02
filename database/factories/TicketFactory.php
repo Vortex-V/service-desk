@@ -23,7 +23,7 @@ final class TicketFactory extends Factory
     public function definition(): array
     {
         return [
-            'status' => TicketStatus::Draft,
+            'status' => TicketStatus::New,
             'author_id' => auth()->id(),
         ];
     }

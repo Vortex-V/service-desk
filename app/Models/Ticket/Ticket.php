@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Models\Ticket;
 
+use App\Models\Ticket\Enum\TicketStatus;
 use App\Models\User\User;
 use Database\Factories\TicketFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -21,13 +22,19 @@ final class Ticket extends Model
     protected static string $factory = TicketFactory::class;
 
     protected $fillable = [
-        'manager_id',
         'applicant_id',
         'service_id',
         'type_id',
         'priority_id',
         'description',
     ];
+
+    public function casts(): array
+    {
+        return [
+            'status' => TicketStatus::class,
+        ];
+    }
 
     //region Relations
     public function type(): HasOne
@@ -44,5 +51,25 @@ final class Ticket extends Model
     {
         return $this->belongsToMany(User::class, 'ticket_user', 'ticket_id', 'user_id');
     }
+
+    public function author(): HasOne
+    {
+        return $this->hasOne(User::class, 'id', 'author_id');
+    }
+
+    public function applicant(): HasOne
+    {
+        return $this->hasOne(User::class, 'id', 'applicant_id');
+    }
+
+    public function manager(): HasOne
+    {
+        return $this->hasOne(User::class, 'id', 'manager_id');
+    }
     //endregion
+
+    public static function getStatusLabel(self $ticket): string
+    {
+        return TicketStatus::label($ticket->status);
+    }
 }

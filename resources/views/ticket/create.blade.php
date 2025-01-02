@@ -2,7 +2,8 @@
     declare(strict_types=1)
 @endphp
 
-@use(Illuminate\Database\Eloquent\Builder;use Illuminate\Support\Facades\Gate)
+@use(Illuminate\Database\Eloquent\Builder)
+@use(Illuminate\Support\Facades\Gate)
 
 @php
     $title = 'Создание заявки';
