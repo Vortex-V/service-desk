@@ -47,10 +47,14 @@ class DataColumn implements Column {
             $value = $this->value;
         }
 
-        switch ($value) {
-            case is_scalar($value): return (string)$value;
-            case is_callable($value): return $value($this->data);
-            default: return '-';
+        if (is_scalar($value)) {
+            return (string) $value;
         }
+
+        if (is_callable($value)) {
+            return $value($this->data);
+        }
+
+        return '-';
     }
 }

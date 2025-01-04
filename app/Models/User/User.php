@@ -7,6 +7,7 @@ namespace App\Models\User;
 use App\Models\Client\Client;
 use App\Models\User\Enum\UserRole;
 use Database\Factories\UserFactory;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasOne;
@@ -79,10 +80,10 @@ final class User extends Authenticatable
         return $this->role === UserRole::Manager;
     }
 
-    public function getFullNameAttribute(): string
+    public function fullName(): Attribute
     {
-        return Contact::selectRaw("concat_ws(' ', last_name, first_name) as full_name")
-            ->whereRelation('user', 'id', $this->id)
-            ->value('full_name');
+        return Attribute::make(
+            get: fn() => $this->contact->fullName
+        );
     }
 }

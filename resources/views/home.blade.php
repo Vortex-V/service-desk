@@ -35,11 +35,11 @@
                                 'label' => 'Статус',
                             ],
                             [
-                                'attribute' => 'applicant.contact.fullName',
+                                'attribute' => 'applicant.fullName',
                                 'label' => 'Заявка от',
                             ],
                             [
-                                'attribute' => 'manager.contact.fullName',
+                                'attribute' => 'manager.fullName',
                                 'label' => 'Менеджер',
                             ],
                             [
