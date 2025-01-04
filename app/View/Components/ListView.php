@@ -2,11 +2,13 @@
 
 namespace App\View\Components;
 
-use App\View\Components\View\BaseModelView;
-use App\View\Components\View\Column;
+use App\View\Components\ModelView\BaseModelView;
+use App\View\Components\ModelView\Columns\DataColumn;
+use Generator;
 use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
+use ReflectionException;
 
 class ListView extends BaseModelView
 {
@@ -16,7 +18,7 @@ class ListView extends BaseModelView
     public function __construct(
         Model|Collection $data,
         array            $settings,
-        ?string          $columnClass = Column::class,
+        ?string          $columnClass = DataColumn::class,
         public string    $columnView = self::COLUMN_VIEW_HORIZONTAL
     ) {
         parent::__construct($data, $settings, $columnClass);
@@ -30,5 +32,15 @@ class ListView extends BaseModelView
     public function columnViewName(): string
     {
         return "model-view.list.item.$this->columnView";
+    }
+
+    /**
+     * @throws ReflectionException
+     */
+    public function columns(): Generator
+    {
+        foreach ($this->settings as $setting) {
+            yield $this->createColumn($setting, $this->data);
+        }
     }
 }

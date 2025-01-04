@@ -23,4 +23,14 @@ enum TicketStatus: string
     {
         return self::labels()[$value->name];
     }
+
+    public static function statusMap(): array
+    {
+        return [
+            self::New->name => [self::InWork, self::Rejected],
+            self::InWork->name => [self::Closed],
+            self::Closed->name => [],
+            self::Rejected->name => [],
+        ];
+    }
 }

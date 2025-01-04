@@ -28,10 +28,12 @@ final class HomeController extends Controller
     {
         $user = auth()->user();
 
+        $ticketsQuery = Ticket::with(['applicant', 'applicant.contact', 'manager', 'manager.contact', 'type', 'priority']);
+
         if ($user->isAdmin()) {
-            $ticketsPaginator = Ticket::cursorPaginate(10);
+            $ticketsPaginator = $ticketsQuery->cursorPaginate(10);
         } else {
-            $ticketsPaginator = Ticket::whereAny(['author_id', 'applicant_id'], $user->id)->cursorPaginate(10);
+            $ticketsPaginator = $ticketsQuery->whereAny(['author_id', 'applicant_id'], $user->id)->cursorPaginate(10);
         }
 
         return view('home', compact('ticketsPaginator'));

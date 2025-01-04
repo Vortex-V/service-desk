@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace App\View\Components\View;
+namespace App\View\Components\ModelView\Columns;
 
 use Closure;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 
-class Column {
+class DataColumn implements Column {
     public function __construct(
         public array|Model                   $data,
         public string                        $attribute,

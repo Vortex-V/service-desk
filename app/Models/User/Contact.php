@@ -29,4 +29,12 @@ final class Contact extends Model
     {
         return $this->belongsTo(User::class, 'user_id', 'id');
     }
+
+    public function getFullNameAttribute(): string
+    {
+        return join(' ', array_filter([
+            $this->last_name,
+            $this->first_name,
+        ]));
+    }
 }

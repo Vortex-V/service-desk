@@ -1,7 +1,7 @@
 @php
-/**
- * @var \App\View\Components\View\Column $column
- */
+    /**
+     * @var \App\View\Components\ModelView\Columns\DataColumn $column
+     */
 @endphp
 
 <x-bs.list.group class="list-group-flush">
