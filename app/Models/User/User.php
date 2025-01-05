@@ -83,7 +83,7 @@ final class User extends Authenticatable
     public function fullName(): Attribute
     {
         return Attribute::make(
-            get: fn() => $this->contact->fullName
+            get: fn() => $this->contact->fullName ?? $this->name
         );
     }
 }

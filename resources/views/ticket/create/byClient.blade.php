@@ -1,7 +1,7 @@
 <x-ls::hidden name="applicant_id" :value="$user->id"/>
 
 @php
-    $serviceOptions = $services->mapWithKeys(fn(array $item) => [$item['id']=>$item['title']])->prepend('Выберите сервис или услугу', 0);
+    $serviceOptions = [null=>'Выберите сервис или услугу']+$services->mapWithKeys(fn(array $item) => [$item['id']=>$item['title']])->toArray();
 @endphp
 <x-ls::select
     name="service_id"

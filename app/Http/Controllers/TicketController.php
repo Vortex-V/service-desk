@@ -30,13 +30,15 @@ final class TicketController extends Controller
     {
         $user = auth()->user();
 
-        $clients = match ($user->role) {
+        $clients = (match ($user->role) {
             UserRole::Client => $user->client()->get(),
             UserRole::Manager => Client::whereRelation('services.users', 'id', $user->id)->get(),
-        };
+        })->mapWithKeys(function (Client $client, int $key) {
+            return [$client->id => $client->name];
+        });
 
         $services = Service::whereHas('clients', function (Builder $query) use ($clients) {
-            $query->whereIn('id', $clients->pluck('id'));
+            $query->whereIn('id', $clients->keys());
         })
             ->with('clients')
             ->get()
@@ -48,7 +50,7 @@ final class TicketController extends Controller
                 ];
             });
 
-        $usersByClientId = User::whereIn('client_id', $clients->pluck('id'))->get()->groupBy('client_id');
+        $usersByClientId = User::whereIn('client_id', $clients->keys())->get()->groupBy('client_id');
 
         return view('ticket.create', compact('clients', 'services', 'usersByClientId'));
     }
@@ -64,7 +66,7 @@ final class TicketController extends Controller
         $user = auth()->user();
         if ($user->isManager()) {
             $ticket->manager_id = $user->id;
-        } 
+        }
         $ticket->save();
 
         return redirect('home');

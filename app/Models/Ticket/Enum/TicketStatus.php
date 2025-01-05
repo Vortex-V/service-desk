@@ -12,16 +12,16 @@ enum TicketStatus: string
     public static function labels(): array
     {
         return [
-            self::New->name => 'Новая',
-            self::InWork->name => 'В работе',
-            self::Closed->name => 'Закрыта',
-            self::Rejected->name => 'Отклонена',
+            self::New->value => 'Новая',
+            self::InWork->value => 'В работе',
+            self::Closed->value => 'Закрыта',
+            self::Rejected->value => 'Отклонена',
         ];
     }
 
     public static function label(TicketStatus $value): string
     {
-        return self::labels()[$value->name];
+        return self::labels()[$value->value];
     }
 
     public static function statusMap(): array

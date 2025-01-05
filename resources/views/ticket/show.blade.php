@@ -83,6 +83,10 @@
                                     'label' => 'Заявка от',
                                 ],
                                 [
+                                    'attribute' => 'client.name',
+                                    'label' => 'Клиент',
+                                ],
+                                [
                                     'attribute' => 'applicant.email',
                                     'label' => 'Электронная почта',
                                 ],

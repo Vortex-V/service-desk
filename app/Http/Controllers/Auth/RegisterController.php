@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\User\Enum\UserRole;
 use App\Models\User\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
@@ -60,12 +61,13 @@ final class RegisterController extends Controller
     /**
      * Create a new user instance after a valid registration.
      */
-    protected function create(array $data)
+    protected function create(array $data): User
     {
-        return User::create([
+        return User::factory(state: [
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
-        ]);
+            'role' => UserRole::Client
+        ])->createOne();
     }
 }

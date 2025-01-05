@@ -1,12 +1,13 @@
 <div
     x-data="{
-                                    clientId: 0,
+                                    clientId: null,
                                     services: {{ Js::from($services) }},
                                     usersByClientId: {{ Js::from($usersByClientId) }},
                                     get clientServices() {
                                         const clientId = this.clientId;
-                                        return this.services.filter(function(s) {
-                                            for (var id of s.clientIds) {
+
+                                        return this.services.filter(function(service) {
+                                            for (var id of service.clientIds) {
                                                 if (id == clientId) {
                                                     return true;
                                                 }
@@ -16,13 +17,12 @@
                                     },
                                     get clientUsers() {
                                       return this.usersByClientId[this.clientId] || [];
-                                    },
+                                    }
                                 }"
 >
-    <x-ls::select-model label="Клиент"
-                        :options="$clients"
-                        :translateCallback="static fn(App\Models\Client\Client $obj) => [$obj->id, $obj->name]"
-                        :extra_options="[0 => 'Выберите клиента']"
+    <x-ls::select label="Клиент"
+                        :options="[null=>'Выберите']+$clients->toArray()"
+                        placeholder="Выберите"
                         x-model="clientId"
     />
 

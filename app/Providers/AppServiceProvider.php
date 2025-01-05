@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Models\User\User;
+use App\View\Composers\Ticket\IndexViewComposer as TicketIndexViewComposer;
 use Barryvdh\Debugbar\Facades\Debugbar;
 use Illuminate\Auth\Access\Response;
 use Illuminate\Database\Eloquent\Model;
@@ -12,6 +13,7 @@ use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Vite;
 use Illuminate\Support\ServiceProvider;
+use View;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -34,14 +36,26 @@ class AppServiceProvider extends ServiceProvider
 
         Vite::macro('img', fn (string $asset) => $this->asset("resources/images/{$asset}"));
 
+        $this->bootGates();
+
+        Paginator::useBootstrapFive();
+
+        Blade::componentNamespace('MadBob\\Larastrap\\Components', 'ls');
+
+        $this->bootViewComposers();
+    }
+
+    public function bootGates(): void
+    {
         Gate::define('admin', function (User $user) {
             return $user->isAdmin()
                 ? Response::allow()
                 : Response::denyAsNotFound();
         });
+    }
 
-        Paginator::useBootstrapFive();
-
-        Blade::componentNamespace('MadBob\\Larastrap\\Components', 'ls');
+    public function bootViewComposers(): void
+    {
+        View::composer('ticket.index', TicketIndexViewComposer::class);
     }
 }

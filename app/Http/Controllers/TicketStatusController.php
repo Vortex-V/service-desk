@@ -15,6 +15,10 @@ final class TicketStatusController extends Controller
     {
         Gate::authorize('status-to-work', $ticket);
         $ticket->status = TicketStatus::InWork;
+        $user = auth()->user();
+        if ($user->can('is-manager', $ticket)) {
+            $ticket->manager_id = $user->id;
+        }
         $ticket->save();
 
         return redirect()->back();

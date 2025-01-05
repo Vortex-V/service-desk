@@ -14,44 +14,7 @@
             <div class="col-md-8">
                 <div class="card shadow-sm">
                     <div class="card-body">
-                        <x-grid-view
-                            :data="$ticketsPaginator"
-                            :settings="[
-                            [
-                                'attribute' => 'id',
-                                'label' => 'ID',
-                            ],
-                            [
-                                'attribute' => 'type.title',
-                                'label' => 'Тип',
-                            ],
-                            [
-                                'attribute' => 'priority.title',
-                                'label' => 'Приоритет',
-                            ],
-                            [
-                                'attribute' => 'status',
-                                'value' => [\App\Models\Ticket\Ticket::class, 'getStatusLabel'],
-                                'label' => 'Статус',
-                            ],
-                            [
-                                'attribute' => 'applicant.fullName',
-                                'label' => 'Заявка от',
-                            ],
-                            [
-                                'attribute' => 'manager.fullName',
-                                'label' => 'Менеджер',
-                            ],
-                            [
-                                'class' => \App\View\Components\ModelView\Columns\ActionColumn::class,
-                                'action' => fn(\App\Models\Ticket\Ticket $ticket) => view('components.model-view.grid.actions.show', [
-                                    'url' => route('tickets.show', [$ticket]),
-                                ]),
-                            ],
-                        ]"
-                        />
-
-                        {{ $ticketsPaginator->links() }}
+                        @include('ticket.index')
                     </div>
                 </div>
             </div>
