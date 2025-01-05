@@ -61,7 +61,7 @@
 
 Заявки
   * [x] Список
-  * [ ] Фильтры
+  * [x] Фильтры
   * [x] Создание
 * Карточка заявки
   * Отображать
@@ -157,7 +157,7 @@
     id          int
     user_id     int
     ticket_id   int
-    type : applicant|author|manager|watcher
+    type : watcher
     
     comments
     id              int

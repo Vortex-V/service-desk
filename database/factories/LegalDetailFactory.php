@@ -31,8 +31,8 @@ final class LegalDetailFactory extends Factory
         return $this->state(fn(array $attributes) => [
             'inn' => fake()->inn10(),
             'kpp' => fake()->kpp(),
-//            'ogrn',
-//            'bik',
+            'ogrn' => fake()->numerify('#############'),
+            'bik' => fake()->numerify('#########'),
             'country' => fake()->country(),
             'city' => fake()->city(),
             'street' => fake()->streetName(),
