@@ -7,6 +7,7 @@ namespace App\Models\Client;
 use App\Models\Service\Service;
 use App\Models\User\User;
 use Database\Factories\ClientFactory;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -43,4 +44,9 @@ final class Client extends Model
         return $this->belongsToMany(Service::class, 'client_services', 'client_id', 'service_id');
     }
     //endregion
+
+    public function scopeWhereManager(Builder $query, User $user): void
+    {
+        $query->whereRelation('services.users', 'id', $user->id);
+    }
 }

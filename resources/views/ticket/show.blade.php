@@ -16,7 +16,7 @@
                     <div class="card-body">
                         <h1>{{ $title }}</h1>
 
-                        <x-list-view
+                        <x-model-view.attributes
                             :data="$ticket"
                             :settings="[
                                 [
@@ -48,24 +48,24 @@
                 <div class="d-flex flex-wrap gap-1">
                     @if(Gate::allows('status-to-work', $ticket))
                         <x-ls::form action="{{route('tickets.to-work', [$ticket])}}"
-                            buttons_align="start"
-                            :buttons="[
+                                    buttons_align="start"
+                                    :buttons="[
                                 ['label' => 'Взять в работу', 'attributes' => ['type' => 'submit'], 'color' => 'success']
                             ]"
                         />
                     @endif
                     @if(Gate::allows('status-to-closed', $ticket))
                         <x-ls::form action="{{route('tickets.close', [$ticket])}}"
-                            buttons_align="start"
-                            :buttons="[
+                                    buttons_align="start"
+                                    :buttons="[
                                 ['label' => 'Закрыть', 'attributes' => ['type' => 'submit'], 'color' => 'success']
                             ]"
                         />
                     @endif
                     @if(Gate::allows('status-to-rejected', $ticket))
                         <x-ls::form action="{{route('tickets.reject', [$ticket])}}"
-                            buttons_align="start"
-                            :buttons="[
+                                    buttons_align="start"
+                                    :buttons="[
                                 ['label' => 'Отклонить', 'attributes' => ['type' => 'submit'], 'color' => 'danger']
                             ]"
                         />
@@ -75,7 +75,7 @@
             <div class="col-12 col-md-8 col-lg-5">
                 <div class="card shadow-sm">
                     <div class="card-body">
-                        <x-list-view
+                        <x-model-view.attributes
                             :data="$ticket"
                             :settings="[
                                 [
@@ -99,7 +99,7 @@
                                     'label' => 'Описание',
                                 ],
                             ]"
-                            :column-view="\App\View\Components\ListView::COLUMN_VIEW_VERTICAL"
+                            :column-view="\App\View\Components\ModelView\Attributes::COLUMN_VIEW_VERTICAL"
                         />
                     </div>
                 </div>

@@ -1,27 +1,26 @@
 <?php
 
-namespace App\View\Components;
+declare(strict_types=1);
 
-use App\View\Components\ModelView\BaseModelView;
+namespace App\View\Components\ModelView;
+
 use App\View\Components\ModelView\Columns\DataColumn;
 use Generator;
 use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Collection;
-use ReflectionException;
+use Illuminate\View\Component;
 
-class ListView extends BaseModelView
+final class Attributes extends Component
 {
     public const string COLUMN_VIEW_HORIZONTAL = 'horizontal';
     public const string COLUMN_VIEW_VERTICAL = 'vertical';
 
     public function __construct(
-        Model|Collection $data,
-        array            $settings,
-        ?string          $columnClass = DataColumn::class,
-        public string    $columnView = self::COLUMN_VIEW_HORIZONTAL
-    ) {
-        parent::__construct($data, $settings, $columnClass);
+        public Model   $data,
+        public array   $settings,
+        public string  $columnView = self::COLUMN_VIEW_HORIZONTAL
+    )
+    {
     }
 
     public function render(): View
@@ -34,13 +33,14 @@ class ListView extends BaseModelView
         return "model-view.list.item.$this->columnView";
     }
 
-    /**
-     * @throws ReflectionException
-     */
     public function columns(): Generator
     {
         foreach ($this->settings as $setting) {
-            yield $this->createColumn($setting, $this->data);
+            $class = $setting['class'] ?? DataColumn::class;
+            unset($setting['class']);
+            yield app($class, array_merge($setting, [
+                'data' => $this->data,
+            ]));;
         }
     }
 }

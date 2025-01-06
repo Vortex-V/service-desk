@@ -21,6 +21,6 @@ final class UserSeeder extends Seeder
             'password' => Hash::make('admin'),
             'role' => UserRole::Admin,
         ]);
-        User::factory(21)->faked()->create();
+        User::factory(21)->faked()->asManager()->create();
     }
 }

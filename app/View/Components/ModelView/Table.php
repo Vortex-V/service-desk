@@ -2,29 +2,30 @@
 
 declare(strict_types=1);
 
-namespace App\View\Components;
+namespace App\View\Components\ModelView;
 
-use App\View\Components\ModelView\BaseModelView;
 use App\View\Components\ModelView\Columns\ActionColumn;
 use App\View\Components\ModelView\Columns\Column;
 use App\View\Components\ModelView\Columns\DataColumn;
 use Generator;
-use Illuminate\Contracts\Pagination\CursorPaginator;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
-use ReflectionException;
+use Illuminate\View\Component;
 
-final class GridView extends BaseModelView
+final class Table extends Component
 {
 
     /** @var Column[]  */
     private array $columns = [];
 
-    public function __construct(CursorPaginator|Model|Collection $data, array $settings, ?string $columnClass = DataColumn::class)
+    public function __construct(
+        public LengthAwarePaginator|Collection|Model $data,
+        public array                            $settings,
+    )
     {
-        parent::__construct($data, $settings, $columnClass);
     }
 
     public function render(): View
@@ -55,13 +56,14 @@ final class GridView extends BaseModelView
         }
     }
 
-    /**
-     * @throws ReflectionException
-     */
     public function columns(array|Model $data): Generator
     {
         foreach ($this->settings as $setting) {
-            yield $this->createColumn($setting, $data);
+            $class = $setting['class'] ?? DataColumn::class;
+            unset($setting['class']);
+            yield app($class, array_merge($setting, [
+                'data' => $data,
+            ]));
         }
     }
 }

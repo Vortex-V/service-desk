@@ -8,14 +8,11 @@ use App\Models\Client\Client;
 use App\Models\Ticket\Enum\TicketStatus;
 use App\Models\User\User;
 use Database\Factories\TicketFactory;
-use Illuminate\Contracts\Pagination\CursorPaginator;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Http\Request;
 
 final class Ticket extends Model
 {

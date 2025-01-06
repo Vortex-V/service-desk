@@ -17,13 +17,11 @@ class IndexViewComposer
     {
         $user = auth()->user();
 
-        if ($user->isAdmin()) {
-            $ticketsPaginator = Ticket::with([
-                'applicant', 'applicant.contact', 'manager', 'manager.contact', 'client', 'type', 'priority'
-            ])->cursorPaginate(10);
-        } else {
-            $ticketsPaginator = app(TicketSearch::class)->search();
-        }
+        $ticketsPaginator = match ($user->role) {
+            UserRole::Client => app(TicketSearch::class)->whereClientId($user->client_id)->search(),
+            UserRole::Manager => app(TicketSearch::class)->whereManagerId($user->client_id)->search(),
+            UserRole::Admin => app(TicketSearch::class)->search(),
+        };
 
         $ticketTypes = TicketType::all()->mapWithKeys(function (TicketType $ticketType, int $key) {
             return [$ticketType->id => $ticketType->title];
@@ -35,6 +33,7 @@ class IndexViewComposer
         $clients = (match ($user->role) {
             UserRole::Client => $user->client()->get(),
             UserRole::Manager => Client::whereRelation('services.users', 'id', $user->id)->get(),
+            UserRole::Admin => Client::all(),
         })->mapWithKeys(function (Client $client, int $key) {
             return [$client->id => $client->name];
         })->toArray();

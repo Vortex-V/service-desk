@@ -22,6 +22,7 @@ final class DatabaseSeeder extends Seeder
             ClientSeeder::class,
             TicketPrioritySeeder::class,
             TicketTypeSeeder::class,
+            TicketSeeder::class,
         ]);
     }
 }

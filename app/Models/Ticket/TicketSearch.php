@@ -1,13 +1,15 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models\Ticket;
 
 use App\Interface\ModelSearch;
-use Illuminate\Contracts\Pagination\CursorPaginator;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 
-class TicketSearch implements ModelSearch {
+final class TicketSearch implements ModelSearch {
     public function __construct(
         public Request $request,
         public Builder $builder,
@@ -16,13 +18,8 @@ class TicketSearch implements ModelSearch {
     }
 
 
-    public function search(): CursorPaginator
+    public function search(): LengthAwarePaginator
     {
-        $ticketT = 'tickets';
-        $userT = 'users';
-
-        $user = auth()->user();
-
         if (!$this->builder?->getModel()) {
             $this->builder = Ticket::query();
         }
@@ -30,14 +27,7 @@ class TicketSearch implements ModelSearch {
         $this->builder
             ->with([
                 'applicant', 'applicant.contact', 'manager', 'manager.contact', 'client', 'type', 'priority'
-            ])
-            ->where(function (Builder $query) use ($ticketT, $user) {
-                $query
-                    ->whereAny(["$ticketT.author_id", "$ticketT.applicant_id"], $user->id)
-                    ->orWhereRelation('client.services.users', 'id', $user->id)
-                ;
-            })
-        ;
+            ]);
 
         $this->request->whenFilled('id', function (int $value) {
             $this->builder->where('id', $value);
@@ -59,6 +49,26 @@ class TicketSearch implements ModelSearch {
             $this->builder->where('client_id', $value);
         });
 
-        return $this->builder->cursorPaginate(10);
+        return $this->builder
+            ->paginate(10)
+            ->withQueryString();
+    }
+
+    public function whereClientId(int $clientId): self
+    {
+        $this->builder->where('client_id', $clientId);
+        return $this;
+    }
+
+    public function whereManagerId(int $userId): self
+    {
+        $ticketT = 'tickets';
+        $this->builder->where(function (Builder $query) use ($ticketT, $userId) {
+            $query
+                ->whereAny(["$ticketT.author_id", "$ticketT.manager_id"], $userId)
+                ->orWhereRelation('client.services.users', 'id', $userId);
+        })
+        ;
+        return $this;
     }
 }

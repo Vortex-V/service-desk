@@ -36,7 +36,7 @@
     />
 </x-ls::form>
 
-<x-grid-view
+<x-model-view.table
     :data="$ticketsPaginator"
     :settings="[
                             [
