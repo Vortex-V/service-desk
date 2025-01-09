@@ -19,37 +19,27 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav nav-underline me-auto">
-                        @if(Gate::allows('admin'))
-                            <x-bs.navbar.nav-item url="{{ route('users.index') }}">
-                                Super Panel
+                        @auth
+                            @if(Gate::allows('admin'))
+                                <x-bs.navbar.nav-item url="{{ route('users.index') }}">
+                                    Super Panel
+                                </x-bs.navbar.nav-item>
+                            @endif
+                            <x-bs.navbar.nav-item url="{{ route('home') }}">
+                                Мои заявки
                             </x-bs.navbar.nav-item>
-                        @endif
-                        <x-bs.navbar.nav-item url="{{ route('home') }}">
-                            Мои заявки
-                        </x-bs.navbar.nav-item>
-                        @unless(Gate::allows('admin'))
-                            <x-bs.navbar.nav-item url="{{ route('tickets.create') }}">
-                                Создать заявку
-                            </x-bs.navbar.nav-item>
-                        @endunless
+                            @unless(Gate::allows('admin'))
+                                <x-bs.navbar.nav-item url="{{ route('tickets.create') }}">
+                                    Создать заявку
+                                </x-bs.navbar.nav-item>
+                            @endunless
+                        @endauth
                     </ul>
 
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ms-auto">
                         <!-- Authentication Links -->
-                        @guest
-                            @if (Route::has('login'))
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('login') }}">Вход</a>
-                                </li>
-                            @endif
-
-                            @if (Route::has('register'))
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('register') }}">Регистрация</a>
-                                </li>
-                            @endif
-                        @else
+                        @auth
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     {{ Auth::user()->fullName }}
@@ -66,7 +56,7 @@
                                     </form>
                                 </div>
                             </li>
-                        @endguest
+                        @endauth
                     </ul>
                 </div>
             </div>

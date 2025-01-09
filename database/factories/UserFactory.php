@@ -46,7 +46,6 @@ final class UserFactory extends Factory
     public function faked(): self
     {
         return $this->state(fn(array $attributes) => [
-            'name' => fake()->userName(),
             'email' => fake()->unique()->safeEmail(),
             'email_verified_at' => now(),
             'password' => self::$password ??= Hash::make('testuser'),

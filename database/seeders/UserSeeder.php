@@ -17,7 +17,7 @@ final class UserSeeder extends Seeder
     public function run(): void
     {
         User::factory()->faked()->createOne([
-            'name' => 'admin',
+            'email' => 'admin@sd.tech',
             'password' => Hash::make('admin'),
             'role' => UserRole::Admin,
         ]);

@@ -2,9 +2,13 @@
     declare(strict_types=1)
 @endphp
 
+@use(App\Models\Ticket\Ticket)
+
 @php
     $title = "Заявка {$ticket->id}";
     $user = auth()->user();
+
+    $ticket->created_at;
 @endphp
 
 <x-layout.app :title="$title">
@@ -29,7 +33,7 @@
                                 ],
                                 [
                                     'attribute' => 'status',
-                                    'value' => [\App\Models\Ticket\Ticket::class, 'getStatusLabel'],
+                                    'value' => [Ticket::class, 'getStatusLabel'],
                                     'label' => 'Статус',
                                 ],
                                 [
@@ -39,6 +43,14 @@
                                 [
                                     'attribute' => 'manager.fullName',
                                     'label' => 'Менеджер',
+                                ],
+                                [
+                                    'attribute' => 'created_at.toDateTimeString',
+                                    'label' => 'Создана',
+                                ],
+                                [
+                                    'attribute' => 'updated_at.toDateTimeString',
+                                    'label' => 'Последнее изменение',
                                 ],
                             ]"
                         />
