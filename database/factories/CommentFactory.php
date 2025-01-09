@@ -1,14 +1,19 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Database\Factories;
 
+use App\Models\Ticket\Comment;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Ticket\Comment>
+ * @extends Factory<Comment>
  */
-class CommentFactory extends Factory
+final class CommentFactory extends Factory
 {
+    protected $model = Comment::class;
+
     /**
      * Define the model's default state.
      *

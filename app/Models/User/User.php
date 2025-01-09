@@ -80,6 +80,11 @@ final class User extends Authenticatable
         return $this->role === UserRole::Manager;
     }
 
+    public function isClient(): bool
+    {
+        return UserRole::Client === $this->role && !empty($this->client_id);
+    }
+
     public function fullName(): Attribute
     {
         return Attribute::make(

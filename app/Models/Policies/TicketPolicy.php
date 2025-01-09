@@ -23,6 +23,11 @@ final class TicketPolicy
         return $this->isAuthor($user, $ticket);
     }
 
+    public function isApplicant(User $user, Ticket $ticket): bool
+    {
+        return $user->id === $ticket->applicant_id;
+    }
+
     public function isAuthor(User $user, Ticket $ticket): bool
     {
         return $user->id === $ticket->author_id;

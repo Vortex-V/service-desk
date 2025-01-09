@@ -6,6 +6,10 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreCommentRequest;
 use App\Http\Requests\UpdateCommentRequest;
 use App\Models\Ticket\Comment;
+use App\Models\Ticket\Ticket;
+use App\Models\User\User;
+use Illuminate\Container\Attributes\CurrentUser;
+use Illuminate\Http\RedirectResponse;
 
 final class CommentController extends Controller
 {
@@ -28,9 +32,14 @@ final class CommentController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreCommentRequest $request)
+    public function store(StoreCommentRequest $request, Ticket $ticket, #[CurrentUser] User $user): RedirectResponse
     {
-        //
+        Comment::factory()
+            ->for($ticket, 'ticket')
+            ->for($user, 'user')
+            ->createOne($request->validated());
+
+        return back();
     }
 
     /**
