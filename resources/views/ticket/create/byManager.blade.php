@@ -30,7 +30,7 @@
         name="applicant_id"
         label="Заявка от">
         <template x-for="user in clientUsers">
-            <option x-bind:value="user.id" x-text="user.name"></option>
+            <option x-bind:value="user.id" x-text="user.fullName"></option>
         </template>
     </x-bs.form.select>
 

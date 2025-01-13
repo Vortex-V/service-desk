@@ -19,7 +19,7 @@ class IndexViewComposer
 
         $ticketsPaginator = match ($user->role) {
             UserRole::Client => app(TicketSearch::class)->whereClientId($user->client_id)->search(),
-            UserRole::Manager => app(TicketSearch::class)->whereManagerId($user->client_id)->search(),
+            UserRole::Manager => app(TicketSearch::class)->whereManagerId($user->id)->search(),
             UserRole::Admin => app(TicketSearch::class)->search(),
         };
 
@@ -32,7 +32,7 @@ class IndexViewComposer
         $ticketStatuses = TicketStatus::labels();
         $clients = (match ($user->role) {
             UserRole::Client => $user->client()->get(),
-            UserRole::Manager => Client::whereRelation('services.users', 'id', $user->id)->get(),
+            UserRole::Manager => Client::whereManager($user)->get(),
             UserRole::Admin => Client::all(),
         })->mapWithKeys(function (Client $client, int $key) {
             return [$client->id => $client->name];

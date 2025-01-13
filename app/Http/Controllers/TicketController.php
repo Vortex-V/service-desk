@@ -50,7 +50,16 @@ final class TicketController extends Controller
                 ];
             });
 
-        $usersByClientId = User::whereIn('client_id', $clients->keys())->get()->groupBy('client_id');
+        $usersByClientId = User::whereIn('client_id', $clients->keys())
+            ->with('contact')
+            ->get()
+            ->map(fn (User $user) => [
+                'id' => $user->id,
+                'fullName' => $user->fullName,
+                'client_id' => $user->client_id,
+            ])
+            ->groupBy('client_id')
+            ;
 
         return view('ticket.create', compact('clients', 'services', 'usersByClientId'));
     }
@@ -78,22 +87,6 @@ final class TicketController extends Controller
     public function show(Ticket $ticket)
     {
         return view('ticket.show', compact('ticket'));
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Ticket $ticket)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(UpdateTicketRequest $request, Ticket $ticket)
-    {
-        //
     }
 
     /**

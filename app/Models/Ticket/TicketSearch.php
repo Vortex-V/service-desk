@@ -15,19 +15,19 @@ final class TicketSearch implements ModelSearch {
         public Builder $builder,
     )
     {
+        if (!$this->builder?->getModel()) {
+            $this->builder = Ticket::query();
+        }
     }
 
 
     public function search(): LengthAwarePaginator
     {
-        if (!$this->builder?->getModel()) {
-            $this->builder = Ticket::query();
-        }
-
         $this->builder
             ->with([
                 'applicant', 'applicant.contact', 'manager', 'manager.contact', 'client', 'type', 'priority'
-            ]);
+            ])
+            ->orderByDesc('id');
 
         $this->request->whenFilled('id', function (int $value) {
             $this->builder->where('id', $value);

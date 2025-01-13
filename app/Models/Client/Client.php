@@ -28,7 +28,7 @@ final class Client extends Model
         'name',
     ];
 
-    //region Realtions
+    //region Relations
     public function users(): HasMany
     {
         return $this->hasMany(User::class, 'client_id', 'id');
@@ -41,7 +41,9 @@ final class Client extends Model
 
     public function services(): BelongsToMany
     {
-        return $this->belongsToMany(Service::class, 'client_services', 'client_id', 'service_id');
+        return $this->belongsToMany(
+            Service::class,
+            'client_services', 'client_id', 'service_id');
     }
     //endregion
 
