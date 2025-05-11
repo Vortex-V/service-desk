@@ -2,7 +2,9 @@
 
 namespace App\Http\Requests\Admin\User\Contact;
 
+use App\Models\User\User;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class StoreContactRequest extends FormRequest
 {
@@ -22,7 +24,11 @@ class StoreContactRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'user_id' => ['required', 'integer', Rule::exists(User::class, 'id')],
+            'first_name' => ['required', 'string'],
+            'last_name' => ['required', 'string'],
+            'patronymic' => ['string'],
+            'phone' => ['required', 'string'],
         ];
     }
 }

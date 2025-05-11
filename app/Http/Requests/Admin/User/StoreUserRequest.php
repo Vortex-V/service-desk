@@ -2,7 +2,12 @@
 
 namespace App\Http\Requests\Admin\User;
 
+use App\Models\Client\Client;
+use App\Models\User\Enum\UserRole;
+use App\Models\User\User;
+use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class StoreUserRequest extends FormRequest
 {
@@ -11,18 +16,25 @@ class StoreUserRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return auth()->user()->isAdmin();
     }
 
     /**
      * Get the validation rules that apply to the request.
      *
-     * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
+     * @return array<string, ValidationRule|array|string>
      */
     public function rules(): array
     {
         return [
-            //
+            'email' => ['required', 'email', Rule::unique(User::class, 'email')],
+            'password' => ['required', 'string', 'min:8'],
+            'role' => ['required', 'string'],
+            'client_id' => [
+                'exclude_unless:role,' . UserRole::Client->value,
+                'required',
+                'integer',
+                Rule::exists(Client::class, 'id')],
         ];
     }
 }
