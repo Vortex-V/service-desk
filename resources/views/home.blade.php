@@ -4,7 +4,11 @@
             <div class="col-md-8 mb-3">
                 <div class="card shadow-sm">
                     <div class="card-body">
-                        <h1>Мои заявки</h1>
+                        @if(Gate::allows('admin'))
+                            <h1>Заявки</h1>
+                        @else
+                            <h1>Мои заявки</h1>
+                        @endif
                         @unless(Gate::allows('admin'))
                             <a href="{{route('tickets.create')}}" class="btn btn-primary float-end">Создать заявку</a>
                         @endunless

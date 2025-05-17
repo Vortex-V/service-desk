@@ -22,11 +22,15 @@
                         @auth
                             @if(Gate::allows('admin'))
                                 <x-bs.navbar.nav-item url="{{ route('users.index') }}">
-                                    Super Panel
+                                    Пользователи
                                 </x-bs.navbar.nav-item>
                             @endif
                             <x-bs.navbar.nav-item url="{{ route('home') }}">
-                                Мои заявки
+                                @if(Gate::allows('admin'))
+                                    Заявки
+                                @else
+                                    Мои заявки
+                                @endif
                             </x-bs.navbar.nav-item>
                             @unless(Gate::allows('admin'))
                                 <x-bs.navbar.nav-item url="{{ route('tickets.create') }}">

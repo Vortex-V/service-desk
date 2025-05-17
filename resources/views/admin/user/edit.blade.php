@@ -6,11 +6,7 @@ use App\Models\User\Enum\UserRole;
 use App\Models\Client\Client;
 use App\Models\User\User;
 
-/**
- * @var $user User
- */
-
-$title = 'Создание пользователя';
+$title = "Редактирование пользователя {$user->id}";
 ?>
 
 <x-layout.app :title="$title">
@@ -31,25 +27,29 @@ $title = 'Создание пользователя';
                             baseaction="users"
                             :obj="$user"
                             :buttons="[
-                                ['label' => 'Далее', 'attributes' => ['type' => 'submit']]
+                                ['label' => 'Сохранить', 'attributes' => ['type' => 'submit']]
                             ]"
                             formview="vertical"
                         >
                             <x-ls::email label="Email" name="email"/>
 
-                            <x-ls::password label="Пароль" name="password"/>
+                            <x-ls::password label="Новый пароль" name="password"/>
 
                             <x-ls::select
                                 label="Роль"
+                                name="role"
                                 :options="[null=>'Выберите'] + UserRole::labels()"
+                                :value="$user->role->value"
                                 placeholder="Выберите"
                             />
 
                             <x-ls::select
                                 label="Клиент"
+                                name="client_id"
                                 :options="[null=>'Выберите'] + Client::all()
-                                    ->mapWithKeys(fn (Client $client, int $key) => [$client->id => $client->title])
+                                    ->mapWithKeys(fn (Client $client, int $key) => [$client->id => $client->name])
                                     ->toArray()"
+                                :value="$user->client?->id"
                                 placeholder="Выберите"
                             />
                         </x-ls::form>

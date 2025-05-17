@@ -7,10 +7,9 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\User\StoreUserRequest;
 use App\Http\Requests\Admin\User\UpdateUserRequest;
-use App\Models\Client\Client;
-use App\Models\User\Contact;
 use App\Models\User\Enum\UserRole;
 use App\Models\User\User;
+use Arr;
 use Illuminate\Http\RedirectResponse;
 
 final class UserController extends Controller
@@ -22,6 +21,7 @@ final class UserController extends Controller
     {
         $usersPaginator = User::with(['contact', 'client'])
             ->whereNot('role', UserRole::Admin)
+            ->orderByDesc('id')
             ->paginate(10);
 
         return view('admin.user.index', compact('usersPaginator'));
@@ -68,10 +68,16 @@ final class UserController extends Controller
      */
     public function update(UpdateUserRequest $request, User $user): RedirectResponse
     {
-        $user->fill($request->validated());
+        $validated = $request->validated();
+        $client_id = Arr::get($validated, 'client_id');
+        Arr::forget($validated, 'client_id');
+        $user->fill(Arr::except($validated, ['client_id']));
+        if ($client_id) {
+            $user->client_id = $client_id;
+        }
         $user->save();
 
-        return back()->withInput();
+        return redirect()->route('users.show', [$user]);
     }
 
     /**

@@ -28,18 +28,18 @@ $title = 'Создание контакта';
                 <div class="card shadow-sm">
                     <div class="card-body">
                         <x-ls::form
-                            baseaction="users.contacts"
+                            :action="route('users.contacts.store', [$user])"
                             :obj="null"
                             :buttons="[
                                 ['label' => 'Сохранить', 'attributes' => ['type' => 'submit']]
                             ]"
                             formview="vertical"
                         >
-                            <x-ls::hidden name="userId" :value="$user->id"/>
-
-                            <x-ls::text label="Имя" name="first_name"/>
+                            <x-ls::hidden name="user_id" :value="$user->id"/>
 
                             <x-ls::text label="Фамилия" name="last_name"/>
+
+                            <x-ls::text label="Имя" name="first_name"/>
 
                             <x-ls::text label="Отчество" name="patronymic"/>
 

@@ -9,6 +9,7 @@ use App\Http\Requests\Admin\User\Contact\StoreContactRequest;
 use App\Http\Requests\Admin\User\Contact\UpdateContactRequest;
 use App\Models\User\Contact;
 use App\Models\User\User;
+use Arr;
 use Illuminate\Http\RedirectResponse;
 
 final class ContactController extends Controller
@@ -37,38 +38,32 @@ final class ContactController extends Controller
     public function store(StoreContactRequest $request): RedirectResponse
     {
         $contact = Contact::factory()->makeOne();
-        $contact->fill($request->validated());
-        $contact->user_id = $request->integer('userId');
+        $contact->fill(
+            Arr::except($request->validated(), ['user_id'])
+        );
+        $contact->user_id = $request->integer('user_id');
         $contact->save();
 
-        return back()->withInput();
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(Contact $contact)
-    {
-        return view('admin.contact.show', compact('contact'));
+        return redirect()->route('users.index');
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Contact $contact)
+    public function edit(User $user, Contact $contact)
     {
-        return view('admin.contact.edit', compact('contact'));
+        return view('admin.contact.edit', compact('user', 'contact'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateContactRequest $request, Contact $contact): RedirectResponse
+    public function update(UpdateContactRequest $request, User $user, Contact $contact): RedirectResponse
     {
         $contact->fill($request->validated());
         $contact->save();
 
-        return back()->withInput();
+        return redirect()->route('users.show', [$user]);
     }
 
     /**

@@ -5,14 +5,9 @@ declare(strict_types=1);
 use App\Models\User\Enum\UserRole;
 use App\Models\Client\Client;
 use App\Models\User\User;
-use App\Models\User\Contact
+use App\Models\User\Contact;
 
-/**
- * @var $user User
- * @var $contact Contact
- */
-
-$title = 'Создание контакта';
+$title = "Редактирование контакта пользователя {$user->id}";
 ?>
 
 <x-layout.app :title="$title">
@@ -30,16 +25,17 @@ $title = 'Создание контакта';
                 <div class="card shadow-sm">
                     <div class="card-body">
                         <x-ls::form
-                            baseaction="users.contacts"
+                            :action="route('users.contacts.update', [$user, $contact])"
+                            method="PUT"
                             :obj="$contact"
                             :buttons="[
                                 ['label' => 'Сохранить', 'attributes' => ['type' => 'submit']]
                             ]"
                             formview="vertical"
                         >
-                            <x-ls::text label="Имя" name="first_name"/>
-
                             <x-ls::text label="Фамилия" name="last_name"/>
+
+                            <x-ls::text label="Имя" name="first_name"/>
 
                             <x-ls::text label="Отчество" name="patronymic"/>
 
