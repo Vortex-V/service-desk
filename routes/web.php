@@ -11,6 +11,7 @@ use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\TicketController;
 use App\Http\Controllers\TicketStatusController;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', static function () {
@@ -42,5 +43,9 @@ Route::middleware(['auth'])->group(function () {
                 'ticket-priorities' => TicketPriorityController::class,
                 'ticket-types' => TicketTypeController::class,
             ]);
+            Route::get('users/{user}/export', [UserController::class, 'export'])->name('users.export');
+            Route::get('user-excel/export-collection', [UserController::class, 'exportCollection'])->name('users.export-collection');
+            Route::post('user-excel/import-collection', [UserController::class, 'importCollection'])->name('users.import-collection');
+            Route::get('user-excel/import', [UserController::class, 'import'])->name('users.import');
         });
 });

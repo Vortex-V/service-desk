@@ -1,6 +1,6 @@
 FROM php:8.3-fpm
 
-MAINTAINER AVE
+LABEL maintainer = "Aleksandrov Vitaliy"
 
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
@@ -20,7 +20,8 @@ RUN docker-php-ext-install \
         exif \
         xml \
         intl \
-        zip
+        zip \
+        gd
 
 COPY --from=composer:latest /usr/bin/composer /usr/local/bin/composer
 

@@ -40,7 +40,7 @@ final class Attributes extends Component
             unset($setting['class']);
             yield app($class, array_merge($setting, [
                 'data' => $this->data,
-            ]));;
+            ]));
         }
     }
 }

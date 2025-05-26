@@ -5,6 +5,10 @@ declare(strict_types=1);
 use App\Models\User\User;
 use App\Models\User\Enum\UserRole;
 
+/**
+ * @var User $user
+ */
+
 $title = "Пользователь {$user->id}";
 ?>
 <x-layout.app :title="$title">
@@ -26,6 +30,10 @@ $title = "Пользователь {$user->id}";
                     <x-ls::link
                         :href="route('users.contacts.edit', [$user, $user->contact])"
                         label="Редактировать контакт"
+                    />
+                    <x-ls::link
+                        :href="route('users.export', [$user])"
+                        label="Скачать XLSX"
                     />
                 </div>
             </div>

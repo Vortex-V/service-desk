@@ -5,18 +5,31 @@ declare(strict_types=1);
 use App\Models\User\Enum\UserRole;
 use App\Models\User\User;
 use App\View\Components\ModelView\Columns\ActionColumn;
+use App\Models\Client\Client;
 
 $title = 'Пользователи';
 ?>
 <x-layout.app :title="$title">
     <div class="container">
         <div class="row justify-content-center">
-            <div class="col-md-8 mb-3">
+            <div class="col-md-8 mb-3 d-flex flex-column gap-1">
                 <div class="card shadow-sm">
                     <div class="card-body">
                         <h1>{{ $title }}</h1>
                         <a href="{{route('users.create')}}" class="btn btn-primary float-end">Создать пользователя</a>
                     </div>
+                </div>
+
+                <div class="d-flex flex-wrap gap-1">
+                    <a href="{{route('users.import')}}" class="btn btn-primary mb-1">Импорт пользователей</a>
+                    <a href="{{route('users.export-collection', session()->getOldInput())}}" class="btn btn-primary mb-1">Скачать XLSX</a>
+{{--                    <x-ls::form--}}
+{{--                        action="{{route('users.export-collection', session()->getOldInput())}}"--}}
+{{--                        buttons_align="start"--}}
+{{--                        :buttons="[--}}
+{{--                                ['label' => 'Скачать XLSX', 'attributes' => ['type' => 'submit'], 'color' => 'primary']--}}
+{{--                            ]"--}}
+{{--                    />--}}
                 </div>
             </div>
             <div class="col-md-8">
@@ -24,38 +37,43 @@ $title = 'Пользователи';
                     <div class="card-body">
                         <div class="d-flex flex-column gap-4">
 
-{{--                            <x-ls::form
+                            <x-ls::form
                                 method="get"
                                 formview="inline"
                                 :buttons="[
                                     ['label' => 'Поиск']
                                 ]"
                             >
-                                <x-ls::select
-                                    label="Тип"
-                                    name="type_id"
-                                    :value="old('type_id')"
-                                    :options="[null=>'Тип']+$ticketTypes"
+                                <x-ls::text
+                                    label="ID"
+                                    name="id"
+                                    :value="old('id')"
                                 />
-                                <x-ls::select
-                                    label="Приоритет"
-                                    name="priority_id"
-                                    :value="old('priority_id')"
-                                    :options="[null=>'Приоритет']+$ticketPriorities"
+
+                                <x-ls::email
+                                    label="Email"
+                                    name="email"
+                                    :value="old('email')"
                                 />
+
                                 <x-ls::select
-                                    label="Статус"
-                                    name="status"
-                                    :value="old('status')"
-                                    :options="[null=>'Статус']+$ticketStatuses"
+                                    label="Роль"
+                                    name="role"
+                                    :options="[null=>'Выберите'] + UserRole::labels()"
+                                    :value="old('role')"
+                                    placeholder="Выберите"
                                 />
+
                                 <x-ls::select
                                     label="Клиент"
                                     name="client_id"
+                                    :options="[null=>'Выберите'] + Client::all()
+                                        ->mapWithKeys(fn (Client $client, int $key) => [$client->id => $client->name])
+                                        ->toArray()"
                                     :value="old('client_id')"
-                                    :options="[null=>'Клиент']+$clients"
+                                    placeholder="Выберите"
                                 />
-                            </x-ls::form>--}}
+                            </x-ls::form>
 
                             <x-model-view.table
                                 :data="$usersPaginator"

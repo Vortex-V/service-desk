@@ -9,12 +9,14 @@ use App\Models\Ticket\TicketPriority;
 use App\Models\Ticket\TicketSearch;
 use App\Models\Ticket\TicketType;
 use App\Models\User\Enum\UserRole;
+use App\Models\User\User;
 use Illuminate\View\View;
 
 class IndexViewComposer
 {
     public function compose(View $view): void
     {
+        /** @var User $user */
         $user = auth()->user();
 
         $ticketsPaginator = match ($user->role) {
