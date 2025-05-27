@@ -23,13 +23,6 @@ $title = 'Пользователи';
                 <div class="d-flex flex-wrap gap-1">
                     <a href="{{route('users.import')}}" class="btn btn-primary mb-1">Импорт пользователей</a>
                     <a href="{{route('users.export-collection', session()->getOldInput())}}" class="btn btn-primary mb-1">Скачать XLSX</a>
-{{--                    <x-ls::form--}}
-{{--                        action="{{route('users.export-collection', session()->getOldInput())}}"--}}
-{{--                        buttons_align="start"--}}
-{{--                        :buttons="[--}}
-{{--                                ['label' => 'Скачать XLSX', 'attributes' => ['type' => 'submit'], 'color' => 'primary']--}}
-{{--                            ]"--}}
-{{--                    />--}}
                 </div>
             </div>
             <div class="col-md-8">
@@ -105,6 +98,12 @@ $title = 'Пользователи';
                                             'url' => route('users.show', [$user]),
                                         ]),
                                     ],
+                                    [
+                                        'class' => ActionColumn::class,
+                                        'action' => static fn(User $user) => view('components.model-view.grid.actions.destroy', [
+                                            'url' => route('users.destroy', [$user]),
+                                        ]),
+                                    ],
                                 ]"
                             />
 
@@ -116,4 +115,13 @@ $title = 'Пользователи';
             </div>
         </div>
     </div>
+
+    <x-bs.modal.alert
+        id="modal-destroy"
+        method="DELETE"
+        title="Удалить пользователя?"
+        text="Пользователь будет удалён."
+        closeText="Отмена"
+        acceptText="Подтвердить"
+    />
 </x-layout.app>
