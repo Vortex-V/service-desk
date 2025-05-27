@@ -70,9 +70,24 @@
                                     'url' => route('tickets.show', [$ticket]),
                                 ]),
                             ],
+                            [
+                                'class' => ActionColumn::class,
+                                'action' => static fn(Ticket $ticket) => view('components.model-view.grid.actions.destroy', [
+                                    'url' => route('tickets.destroy', [$ticket]),
+                                ]),
+                            ],
                         ]"
 />
 
 {{ $ticketsPaginator->links() }}
 
 </div>
+
+<x-bs.modal.alert
+    id="modal-destroy"
+    method="DELETE"
+    title="Удалить заявку?"
+    text="Заявка будет удалена."
+    closeText="Отмена"
+    acceptText="Подтвердить"
+/>

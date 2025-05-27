@@ -18,9 +18,9 @@ final class TicketPolicy
         return $this->isAuthor($user, $ticket);
     }
 
-    public function delete(User $user, Ticket $ticket): bool
+    public function destroy(User $user, Ticket $ticket): bool
     {
-        return $this->isAuthor($user, $ticket);
+        return $this->isAuthor($user, $ticket) || auth()->user()?->isAdmin();
     }
 
     public function isApplicant(User $user, Ticket $ticket): bool

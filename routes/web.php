@@ -24,7 +24,7 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 
 Route::middleware(['auth'])->group(function () {
     Route::resource('tickets', TicketController::class)
-        ->only(['index', 'create', 'store', 'show']);
+        ->only(['index', 'create', 'store', 'show', 'destroy']);
     Route::post('tickets/{ticket}/to-work', [TicketStatusController::class, 'toWork'])->name('tickets.to-work');
     Route::post('tickets/{ticket}/close', [TicketStatusController::class, 'close'])->name('tickets.close');
     Route::post('tickets/{ticket}/reject', [TicketStatusController::class, 'reject'])->name('tickets.reject');

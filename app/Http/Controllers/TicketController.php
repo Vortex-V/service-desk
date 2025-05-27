@@ -94,7 +94,7 @@ final class TicketController extends Controller
      */
     public function destroy(Ticket $ticket)
     {
-        Gate::allows('delete', $ticket);
+        Gate::allows('destroy', $ticket);
 
         $ticket->delete();
 
