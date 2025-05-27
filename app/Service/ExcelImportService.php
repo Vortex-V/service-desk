@@ -8,12 +8,11 @@ use PhpOffice\PhpSpreadsheet\IOFactory;
 
 class ExcelImportService
 {
-    public static function import(UploadedFile $file): Collection
+    public static function import(UploadedFile $file, array $map): Collection
     {
         $spreadsheet = IOFactory::load($file->getRealPath());
         $sheet = $spreadsheet->getActiveSheet();
 
-        $data = collect();
 
         $columnCount = 0;
         foreach ($sheet->getRowIterator(endRow: 1) as $row) {
@@ -29,14 +28,25 @@ class ExcelImportService
             }
         }
 
+        $data = [];
         foreach ($sheet->getRowIterator(2) as $row) {
             $rowData = [];
-            foreach ($row->getCellIterator(endColumn: $columnCount) as $cell) {
-                $rowData[] = $cell->getValue();
+            $cellNumber = 0;
+            foreach ($row->getCellIterator(
+                endColumn: range('A', 'Z')[$columnCount-1]
+            ) as $cell) {
+                $cellValue = $cell->getValue();
+                if (empty($cellValue)) {
+                    break;
+                }
+                $rowData[$map[$cellNumber]] = $cellValue;
+                $cellNumber++;
             }
-            $data->push($rowData);
+            if (!empty($rowData)) {
+                $data[] = $rowData;
+            }
         }
 
-        return $data;
+        return collect($data);
     }
 }

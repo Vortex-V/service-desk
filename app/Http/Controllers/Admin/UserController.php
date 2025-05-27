@@ -19,6 +19,7 @@ use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Application;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\DB;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 
 final class UserController extends Controller
@@ -215,34 +216,35 @@ final class UserController extends Controller
         return view('admin.user.import');
     }
 
-    public function importCollection()
+    public function importCollection(): RedirectResponse
     {
         $file = request()->file('file');
 
-        $data = ExcelImportService::import($file);
+        $data = ExcelImportService::import($file, User::importMap());
 
-        $data->shift();
         $data->map(function ($item) {
-            $client = Client::where('name', $item['client_name'])->firstOrFail();
+            DB::transaction(static function () use ($item) {
+                $client = Client::where('name', $item['client_name'])->firstOrFail();
 
-            $user = User::factory()
-                ->state([
-                    'email' => $item['email'],
-                    'role' => UserRole::Client
-                ])
-                ->hasAttached($client, relationship: 'client')
-                ->makeOne();
-            $user->save();
+                $user = User::factory()
+                    ->state([
+                        'email' => $item['email'],
+                        'password' => $item['password'],
+                        'role' => UserRole::Client,
+                        'client_id' => $client->id,
+                    ])
+                    ->createOne();
 
-            $contact = Contact::factory()
-                ->state([
-                    'last_name' => $item['last_name'],
-                    'first_name' => $item['first_name'],
-                    'patronymic' => $item['patronymic'],
-                    'phone' => $item['phone'],
-                ])
-                ->hasAttached($user, relationship: 'user')
-                ->createOne();
+                Contact::factory()
+                    ->state([
+                        'last_name' => $item['last_name'],
+                        'first_name' => $item['first_name'],
+                        'patronymic' => $item['patronymic'],
+                        'phone' => $item['phone'],
+                        'user_id' => $user->id,
+                    ])
+                    ->createOne();
+            });
         });
 
         return redirect()->route('users.index')->withInput();

@@ -61,6 +61,19 @@ final class User extends Authenticatable
         ];
     }
 
+    public static function importMap(): array
+    {
+        return [
+            'email',
+            'password',
+            'client_name',
+            'last_name',
+            'first_name',
+            'patronymic',
+            'phone',
+        ];
+    }
+
     public function contact(): HasOne
     {
         return $this->hasOne(Contact::class, 'user_id', 'id');
