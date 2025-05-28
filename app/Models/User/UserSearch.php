@@ -35,7 +35,7 @@ final class UserSearch implements ModelSearch {
         });
 
         $this->request->whenFilled('email', function (string $value) {
-            $this->builder->where('email', $value);
+            $this->builder->whereLike('email', $value);
         });
 
         $this->request->whenFilled('role', function (string $value) {

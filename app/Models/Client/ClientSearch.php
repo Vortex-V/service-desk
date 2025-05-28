@@ -24,7 +24,7 @@ final class ClientSearch implements ModelSearch {
     {
         $this->builder
             ->with([
-                'legal',
+                'legalDetail',
             ])
             ->orderByDesc('id');
 
@@ -33,7 +33,7 @@ final class ClientSearch implements ModelSearch {
         });
 
         $this->request->whenFilled('name', function (string $value) {
-            $this->builder->where('name', $value);
+            $this->builder->whereLike('name', $value);
         });
 
         return $this->builder

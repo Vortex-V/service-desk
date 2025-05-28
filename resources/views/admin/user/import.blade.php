@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+use App\Models\Client\Client;
+
 $title = "Импорт пользователей";
 ?>
 
@@ -25,6 +27,14 @@ $title = "Импорт пользователей";
                             enctype="multipart/form-data"
                         >
                             @csrf()
+                            <x-ls::select
+                                label="Клиент"
+                                name="client_id"
+                                :options="[null=>'Выберите'] + Client::all()
+                                    ->mapWithKeys(fn (Client $client, int $key) => [$client->id => $client->name])
+                                    ->toArray()"
+                                placeholder="Выберите"
+                            />
                             <div class="mb-3">
                                 <label for="formFile" class="form-label">Выберите XLSX файл для импорта</label>
                                 <input class="form-control" type="file" id="formFile" name="file" required>

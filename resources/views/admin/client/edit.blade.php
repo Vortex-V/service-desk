@@ -6,7 +6,7 @@ use App\Models\User\Enum\UserRole;
 use App\Models\Client\Client;
 use App\Models\User\User;
 
-$title = "Редактирование пользователя {$user->id}";
+$title = "Редактирование клиента {$client->id}";
 ?>
 
 <x-layout.app :title="$title">
@@ -24,34 +24,14 @@ $title = "Редактирование пользователя {$user->id}";
                 <div class="card shadow-sm">
                     <div class="card-body">
                         <x-ls::form
-                            baseaction="users"
-                            :obj="$user"
+                            baseaction="clients"
+                            :obj="$client"
                             :buttons="[
                                 ['label' => 'Сохранить', 'attributes' => ['type' => 'submit']]
                             ]"
                             formview="vertical"
                         >
-                            <x-ls::email label="Email" name="email"/>
-
-                            <x-ls::password label="Новый пароль" name="password"/>
-
-                            <x-ls::select
-                                label="Роль"
-                                name="role"
-                                :options="[null=>'Выберите'] + UserRole::labels()"
-                                :value="$user->role->value"
-                                placeholder="Выберите"
-                            />
-
-                            <x-ls::select
-                                label="Клиент"
-                                name="client_id"
-                                :options="[null=>'Выберите'] + Client::all()
-                                    ->mapWithKeys(fn (Client $client, int $key) => [$client->id => $client->name])
-                                    ->toArray()"
-                                :value="$user->client?->id"
-                                placeholder="Выберите"
-                            />
+                            <x-ls::text label="Название" name="name"/>
                         </x-ls::form>
                     </div>
                 </div>

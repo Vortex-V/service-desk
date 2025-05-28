@@ -66,7 +66,6 @@ final class User extends Authenticatable
         return [
             'email',
             'password',
-            'client_name',
             'last_name',
             'first_name',
             'patronymic',

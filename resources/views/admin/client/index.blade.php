@@ -58,20 +58,20 @@ $title = 'Клиенты';
                                     ],
                                     [
                                         'class' => ActionColumn::class,
-                                        'action' => static fn(Clients $client) => view('components.model-view.grid.actions.show', [
+                                        'action' => static fn(Client $client) => view('components.model-view.grid.actions.show', [
                                             'url' => route('clients.show', [$client]),
                                         ]),
                                     ],
                                     [
                                         'class' => ActionColumn::class,
-                                        'action' => static fn(Clients $client) => view('components.model-view.grid.actions.destroy', [
+                                        'action' => static fn(Client $client) => view('components.model-view.grid.actions.destroy', [
                                             'url' => route('clients.destroy', [$client]),
                                         ]),
                                     ],
                                 ]"
                             />
 
-                            {{ $usersPaginator->links() }}
+                            {{ $clientsPaginator->links() }}
 
                         </div>
                     </div>

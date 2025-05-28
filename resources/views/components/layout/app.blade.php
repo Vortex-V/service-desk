@@ -21,9 +21,11 @@
                     <ul class="navbar-nav nav-underline me-auto">
                         @auth
                             @if(Gate::allows('admin'))
-                                <x-bs.navbar.nav-item url="{{ route('users.index') }}">
-                                    Пользователи
-                                </x-bs.navbar.nav-item>
+                                <x-bs.dropdown.nav-item>
+                                    <x-slot:label>Админ панель</x-slot:label>
+                                    <li><a class="dropdown-item" href="{{ route('users.index') }}">Пользователи</a></li>
+                                    <li><a class="dropdown-item" href="{{ route('clients.index') }}">Клиенты</a></li>
+                                </x-bs.dropdown.nav-item>
                             @endif
                             <x-bs.navbar.nav-item url="{{ route('home') }}">
                                 @if(Gate::allows('admin'))
@@ -42,7 +44,6 @@
 
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ms-auto">
-                        <!-- Authentication Links -->
                         @auth
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

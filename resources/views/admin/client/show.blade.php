@@ -24,7 +24,7 @@ $title = "Клиент {$client->id}";
 
                 <div class="d-flex flex-wrap gap-1">
                     <x-ls::link
-                        :href="route('clients.edit', [$user])"
+                        :href="route('clients.edit', [$client])"
                         label="Редактировать"
                     />
                 </div>
@@ -33,7 +33,7 @@ $title = "Клиент {$client->id}";
                 <div class="card shadow-sm">
                     <div class="card-body">
                         <x-model-view.attributes
-                            :data="$user"
+                            :data="$client"
                             :settings="[
                                     [
                                         'attribute' => 'id',

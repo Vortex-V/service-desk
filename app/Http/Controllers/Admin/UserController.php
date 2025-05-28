@@ -220,12 +220,12 @@ final class UserController extends Controller
     {
         $file = request()->file('file');
 
+        $client = Client::whereId(request('client_id'))->firstOrFail();
+
         $data = ExcelImportService::import($file, User::importMap());
 
-        $data->map(function ($item) {
-            DB::transaction(static function () use ($item) {
-                $client = Client::where('name', $item['client_name'])->firstOrFail();
-
+        $data->map(function ($item) use ($client) {
+            DB::transaction(static function () use ($item, $client) {
                 $user = User::factory()
                     ->state([
                         'email' => $item['email'],

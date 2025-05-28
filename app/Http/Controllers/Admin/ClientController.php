@@ -23,11 +23,11 @@ final class ClientController extends Controller
     {
         /** @var ClientSearch $search */
         $search = app(ClientSearch::class);
-        $clientPaginator = $search->search();
+        $clientsPaginator = $search->search();
 
         session()?->flashInput(request()->input());
 
-        return view('admin.client.index', compact('clientPaginator'));
+        return view('admin.client.index', compact('clientsPaginator'));
     }
 
     /**
