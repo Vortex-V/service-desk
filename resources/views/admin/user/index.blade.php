@@ -52,19 +52,17 @@ $title = 'Пользователи';
                                 <x-ls::select
                                     label="Роль"
                                     name="role"
-                                    :options="[null=>'Выберите'] + UserRole::labels()"
+                                    :options="[null=>'Роль'] + UserRole::labels()"
                                     :value="old('role')"
-                                    placeholder="Выберите"
                                 />
 
                                 <x-ls::select
                                     label="Клиент"
                                     name="client_id"
-                                    :options="[null=>'Выберите'] + Client::all()
+                                    :options="[null=>'Клиент'] + Client::all()
                                         ->mapWithKeys(fn (Client $client, int $key) => [$client->id => $client->name])
                                         ->toArray()"
                                     :value="old('client_id')"
-                                    placeholder="Выберите"
                                 />
                             </x-ls::form>
 

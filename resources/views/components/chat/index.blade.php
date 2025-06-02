@@ -1,16 +1,18 @@
 <h2>Чат</h2>
 <div class="mb-3">
 
-    <x-ls::form
-        :action="route('tickets.comments.store', $ticket)"
-        :buttons="[
-            ['label' => 'Отправить', 'attributes' => ['type' => 'submit']]
-        ]"
-        formview="vertical"
-    >
-        <x-ls::textarea name="body"/>
+    @canany(['is-manager', 'is-applicant', 'is-author'], $ticket)
+        <x-ls::form
+            :action="route('tickets.comments.store', $ticket)"
+            :buttons="[
+                ['label' => 'Отправить', 'attributes' => ['type' => 'submit']]
+            ]"
+            formview="vertical"
+        >
+            <x-ls::textarea name="body"/>
 
-    </x-ls::form>
+        </x-ls::form>
+    @endcan
 
 </div>
 
