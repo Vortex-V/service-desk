@@ -13,14 +13,24 @@ use App\Http\Controllers\TicketController;
 use App\Http\Controllers\TicketStatusController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use Laravel\Fortify\Features;
+use Livewire\Volt\Volt;
 
-Route::get('/', static function () {
-    return redirect('login');
-});
+//Route::get('/', static function () {
+//    return redirect('login');
+//});
+//
+//Auth::routes();
+//
+//Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-Auth::routes();
+Route::get('/', function () {
+    return view('welcome');
+})->name('home');
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::view('dashboard', 'dashboard')
+    ->middleware(['auth', 'verified'])
+    ->name('dashboard');
 
 Route::middleware(['auth'])->group(function () {
     Route::resource('tickets', TicketController::class)
@@ -48,4 +58,21 @@ Route::middleware(['auth'])->group(function () {
             Route::post('user-excel/import-collection', [UserController::class, 'importCollection'])->name('users.import-collection');
             Route::get('user-excel/import', [UserController::class, 'import'])->name('users.import');
         });
+
+    Route::redirect('settings', 'settings/profile');
+
+    Volt::route('settings/profile', 'settings.profile')->name('profile.edit');
+    Volt::route('settings/password', 'settings.password')->name('user-password.edit');
+    Volt::route('settings/appearance', 'settings.appearance')->name('appearance.edit');
+
+    Volt::route('settings/two-factor', 'settings.two-factor')
+        ->middleware(
+            when(
+                Features::canManageTwoFactorAuthentication()
+                    && Features::optionEnabled(Features::twoFactorAuthentication(), 'confirmPassword'),
+                ['password.confirm'],
+                [],
+            ),
+        )
+        ->name('two-factor.show');
 });
