@@ -22,7 +22,15 @@ RUN apt-get -y autoremove \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
-RUN usermod -u 1000 www-data
+ARG USER_ID
+ARG GROUP_ID
+RUN addgroup --gid $GROUP_ID appgroup && \
+    adduser --uid $USER_ID -gid $GROUP_ID appuser
+RUN setcap CAP_NET_BIND_SERVICE=+eip /usr/local/bin/frankenphp; \
+	chown -R appuser:appgroup /config/caddy /data/caddy \
+    chmod -R u+w /config /data
+USER appuser:appgroup
+RUN usermod -u $USER_ID appuser
 
 ENV PHP_INI_SCAN_DIR /usr/local/etc/php/local-conf.d:
 

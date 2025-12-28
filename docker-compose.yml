@@ -1,6 +1,10 @@
 services:
     app:
-        build: ./docker
+        build:
+            context: ./docker
+            args:
+                USER_ID: "${USER_ID}"
+                GROUP_ID: "${GROUP_ID}"
         # restart: always
         user: "${USER_ID}:${GROUP_ID}"
         volumes:
